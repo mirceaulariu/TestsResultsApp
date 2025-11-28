@@ -6,6 +6,11 @@
 
 ## 🇬🇧 English
 
+
+### [ OVERVIEW ]
+**Test Results Viewer** is a tool designed to easily view text-based test result files. It features a smart **"Upload from XML"** button that automatically locates and loads files based on paths found in your XML reports, alongside customizable buttons for executing batch scripts directly from the interface.
+
+
 ### [ 1. PREREQUISITES ]
 To run this application, you must have **Java** installed on your computer.
 To check if you have Java, open Command Prompt (`cmd`) and type:
@@ -26,7 +31,18 @@ Double-click the file named: TestResultsViewer.jar (or just TestResultsViewer if
 
 The application will start, and your default web browser should open automatically to: http://localhost:8080
 
-### [ 3. TROUBLESHOOTING ]
+
+### [ 3. HOW TO USE]
+Press the "Upload from XML" button on the down side of the page and then paste your XML's filepath (ex.: `"C:\Users\user1\Desktop\yourXMLFile.xml"`), and then press OK.
+
+The app will show all the text files specified in that XML file under the field "Comparer_OutputFile".
+
+You can then click on a file to review its content.
+
+One can also remove from the list the files that have no test result errors by clicking the "Keep files > 15B" button on the upper side of the page.
+
+
+### [ 4. TROUBLESHOOTING ]
  "I double-clicked, but nothing happened" Open this folder in a terminal (Command Prompt) and run:
 
 ```cmd
@@ -56,7 +72,7 @@ Method B: Restart your computer.
 
  "The app opens but says 'Invalid response' or buttons don't work" Ensure the button-config.json file is in the SAME folder as the .jar file.
 
-### [ 4. CUSTOMIZATION ]
+### [ 5. CUSTOMIZATION ]
 You can add your own buttons or change existing ones without recompiling the code.
 
 Open button-config.json in any text editor (Notepad, VS Code).
@@ -77,6 +93,10 @@ Save the file and restart the application.
 
 ## 🇷🇴 Română
 
+
+### [ PREZENTARE GENERALĂ ]
+Test Results Viewer este un instrument conceput pentru a vizualiza ușor fișierele text cu rezultatele testelor. Dispune de un buton inteligent "Upload from XML" care localizează și încarcă automat fișierele pe baza căilor găsite în rapoartele XML, alături de butoane personalizabile pentru executarea scripturilor batch direct din interfață.
+
 ### [ 1. Cerințe prealabile ]
 Pentru a rula această aplicație, trebuie să aveți Java instalat pe calculator. Pentru a verifica dacă aveți Java, deschideți Command Prompt (cmd) și tastați:
 
@@ -96,7 +116,19 @@ Dați dublu-click pe fișierul numit: TestResultsViewer.jar (sau doar TestResult
 
 Aplicația va porni, iar browserul dvs. implicit ar trebui să se deschidă automat la adresa: http://localhost:8080
 
-### [ 3. DEPANARE (PROBLEME FRECVENTE) ]
+
+### [ 3. CUM SE FOLOSEȘTE]
+
+Faceți click pe butonul "Upload from XML" din partea de jos a paginii și apoi lipiți adresa fișierului XML (ex.: `"C:\Users\user1\Desktop\yourXMLFile.xml"`), apăsați OK.
+
+Aplicația va afișa toate fișierele text ale căror adrese sunt specificate in fișierul XML, la câmpul "Comparer_OutputFile".
+
+Poți afișa conținutul unui fișier printr-un click pe fișier.
+
+Se pot elimina din listă fișierele ale căror conținut este aproape gol (testele nu prezintă erori), prin apăsarea butonului "Keep files > 15B".
+
+
+### [ 4. DEPANARE (PROBLEME FRECVENTE) ]
  "Am dat dublu-click, dar nu s-a întâmplat nimic" Deschideți acest folder într-un terminal (Command Prompt) și rulați comanda:
 
 ```cmd
@@ -126,7 +158,7 @@ Metoda B: Reporniți calculatorul.
 
  "Aplicația se deschide dar afișează 'Invalid response' sau butoanele nu funcționează" Asigurați-vă că fișierul button-config.json se află în ACELAȘI folder cu fișierul .jar.
 
-### [ 4. PERSONALIZARE ]
+### [ 5. PERSONALIZARE ]
 Puteți adăuga propriile butoane sau le puteți modifica pe cele existente fără a recompila codul.
 
 Deschideți button-config.json în orice editor de text (Notepad, VS Code).
