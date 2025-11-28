@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Upload from XML",
+    "executable": "upload-xml",
+    "description": "Uploads .txt files found in Comparer_OutputFile"
+  },
+  {
+    "label": "Buton 1",
+    "executable": "b1.cmd",
+    "params": ["--fast", "--input"],
+    "description": "executes b1.cmd(nothing). configure in button-config.json"
+  }
+
+]

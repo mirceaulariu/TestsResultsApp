@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Test results viewer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            /* Prevent the whole page from scrolling; individual boxes will scroll instead */
+            overflow: hidden;
+        }
+
+        #app-container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            height: 100vh; /* Use full viewport height */
+        }
+
+        #page-title {
+            text-align: center;
+            color: blue;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            flex-shrink: 0; /* Don't let the title shrink */
+        }
+
+        /* Top Toolbar Area */
+        .command-row-top {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        #browse-button-container button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* MAIN CONTENT AREA - Takes up all remaining space */
+        #main-content {
+            display: flex;
+            flex-grow: 1; /* This is the magic: fill all available space */
+            gap: 1rem;
+            padding: 0 1rem;
+            min-height: 0; /* Critical for scrolling inside flex items */
+            margin-bottom: 1rem;
+        }
+
+        #file-box,
+        #details-box {
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+
+            /* Make these boxes handle their own scrolling */
+            overflow-y: auto;
+            height: 100%; /* Fill the #main-content parent */
+            box-sizing: border-box; /* Include padding in height calculation */
+        }
+
+        #file-box {
+            width: 40%; /* Relative width */
+            min-width: 300px; /* Don't get too small */
+        }
+
+        #details-box {
+            flex-grow: 1; /* Take remaining width */
+        }
+
+        #file-box h2,
+        #details-box h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            position: sticky; /* Keep header at top when scrolling */
+            top: 0;
+            background: #f9f9f9;
+            padding-bottom: 5px;
+            z-index: 1;
+        }
+
+        /* FOOTER / COMMAND BUTTONS AREA */
+        #command-buttons-container {
+            flex-shrink: 0; /* Don't shrink */
+            background-color: #e9ecef; /* Light gray background for footer */
+            padding: 1rem;
+            border-top: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap; /* Allow wrapping if too many buttons */
+        }
+
+        #edit-buttons-btn {
+            background-color: #28a745; /* Green for distinct action */
+            color: white;
+            border-radius: 5px;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        #command-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Shared button styles */
+        button {
+            cursor: pointer;
+        }
+
+        #command-buttons button,
+        .command-row-top button {
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Command Row inside the footer */
+        .command-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+        }
+
+        .command-row .description {
+            display: none;
+            position: absolute;
+            bottom: 100%; /* Show ABOVE the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 5px;
+        }
+
+        .command-row:hover .description {
+            display: block;
+        }
+
+        /* Modal Styles */
+        #button-editor-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #button-editor-modal .modal-content {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #button-editor-modal input[type="text"] {
+            width: 100%;
+            padding: 0.3rem 0.5rem;
+            margin-bottom: 0.8rem;
+            box-sizing: border-box;
+        }
+
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { border-bottom: 1px solid #ddd; padding: 0.3rem 0.5rem; text-align: left; word-break: break-all; }
+        th { background: #eee; position: sticky; top: 25px; z-index: 1; cursor: pointer;} /* Sticky header below title */
+        tr:hover { background: #f0f8ff; cursor: pointer; }
+        .delete-btn { color: #b00; border: none; background: transparent; font-size: 1rem; }
+    </style>
+</head>
+<body>
+<div id="app-container">
+
+    <h1 id="page-title">Test results viewer</h1>
+
+    <div class="command-row-top">
+        <button id="browse-btn">Browse</button>
+        <button id="filter-large-files-btn">Keep files > 15B</button>
+        <input type="file" id="file-input" multiple webkitdirectory style="display: none;">
+    </div>
+
+    <div id="main-content">
+
+        <div id="file-box">
+            <div id="button-editor-modal" style="display:none;">
+                <div class="modal-content">
+                    <h3>Add New Command Button</h3>
+                    <label>Label:<br /><input type="text" id="new-button-label" /></label><br />
+                    <label>Executable:<br /><input type="text" id="new-button-executable" /></label><br />
+                    <label>Description:<br /><input type="text" id="new-button-description" /></label><br />
+                    <button id="save-button-config">Save</button>
+                    <button id="close-editor-modal">Cancel</button>
+                </div>
+            </div>
+
+            <h2>File List</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th data-sort="name" data-label="Name">Name</th>
+                    <th data-sort="directory" data-label="Directory">Directory</th>
+                    <th data-sort="modified" data-label="Last Modified">Last Modified</th>
+                    <th data-sort="size" data-label="Size">Size</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="file-list"></tbody>
+            </table>
+        </div>
+
+        <div id="details-box">
+            <h2>Selected File Details</h2>
+            <div id="file-details">
+                <p>Select a file from the list to see details here.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="command-buttons-container">
+        <button id="edit-buttons-btn">Add Custom Button</button>
+        <div id="command-buttons"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
