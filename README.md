@@ -17,7 +17,7 @@ If you see a version number (e.g., "openjdk version 17..."), you are good to go.
 
 If you see an error, please install the Java Runtime Environment (JRE).
 
-[ 2. HOW TO RUN ]
+### [ 2. HOW TO RUN ]
 Unzip this folder to a location on your computer (e.g., Desktop).
 
 IMPORTANT: Do not run the app directly from inside the ZIP file.
@@ -26,7 +26,7 @@ Double-click the file named: TestResultsViewer.jar (or just TestResultsViewer if
 
 The application will start, and your default web browser should open automatically to: http://localhost:8080
 
-[ 3. TROUBLESHOOTING ]
+### [ 3. TROUBLESHOOTING ]
  "I double-clicked, but nothing happened" Open this folder in a terminal (Command Prompt) and run:
 
 ```cmd
@@ -56,7 +56,7 @@ Method B: Restart your computer.
 
  "The app opens but says 'Invalid response' or buttons don't work" Ensure the button-config.json file is in the SAME folder as the .jar file.
 
-[ 4. CUSTOMIZATION ]
+### [ 4. CUSTOMIZATION ]
 You can add your own buttons or change existing ones without recompiling the code.
 
 Open button-config.json in any text editor (Notepad, VS Code).
@@ -87,7 +87,7 @@ Dacă vedeți un număr de versiune (de ex., "openjdk version 17..."), sunteți 
 
 Dacă primiți o eroare, vă rugăm să instalați Java Runtime Environment (JRE).
 
-[ 2. CUM SE RULEAZĂ ]
+### [ 2. CUM SE RULEAZĂ ]
 Dezarhivați acest folder într-o locație pe calculator (de ex., pe Desktop).
 
 IMPORTANT: Nu rulați aplicația direct din interiorul arhivei ZIP.
@@ -96,7 +96,7 @@ Dați dublu-click pe fișierul numit: TestResultsViewer.jar (sau doar TestResult
 
 Aplicația va porni, iar browserul dvs. implicit ar trebui să se deschidă automat la adresa: http://localhost:8080
 
-[ 3. DEPANARE (PROBLEME FRECVENTE) ]
+### [ 3. DEPANARE (PROBLEME FRECVENTE) ]
  "Am dat dublu-click, dar nu s-a întâmplat nimic" Deschideți acest folder într-un terminal (Command Prompt) și rulați comanda:
 
 ```cmd
@@ -126,7 +126,7 @@ Metoda B: Reporniți calculatorul.
 
  "Aplicația se deschide dar afișează 'Invalid response' sau butoanele nu funcționează" Asigurați-vă că fișierul button-config.json se află în ACELAȘI folder cu fișierul .jar.
 
-[ 4. PERSONALIZARE ]
+### [ 4. PERSONALIZARE ]
 Puteți adăuga propriile butoane sau le puteți modifica pe cele existente fără a recompila codul.
 
 Deschideți button-config.json în orice editor de text (Notepad, VS Code).
